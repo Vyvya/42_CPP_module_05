@@ -6,7 +6,7 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:01:58 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/10 19:24:40 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/10 19:01:33 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,16 @@ Bureaucrat::~Bureaucrat() {
 	std::cout << "Bureaucrat " << this->_name << " went home" << std::endl;
 }
 
-Bureaucrat::Bureaucrat( const std::string name, int grade ) : _name(name), _grade(grade) {
+Bureaucrat::Bureaucrat( const std::string name, int grade ) : _name(name) {
 	
 	
-	if( grade < 1 ) {
-
-		std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
+	if( grade < 1 )
 		throw Exception ("GradeTooLowException");
-	}
 		
-	if( grade > 150 ) {
-
-		std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
+	if( grade > 150 )
 		throw Exception ("GradeTooHighException");
-	}
 
-	// _grade = grade;
+	_grade = grade;
 	
 	std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
 }
