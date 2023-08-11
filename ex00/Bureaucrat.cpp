@@ -6,7 +6,7 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:01:58 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/10 19:24:40 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/11 13:18:35 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,29 @@
 
 Bureaucrat::Bureaucrat() {
 	
-	std::cout << "Bureaucrat came to office" << std::endl;
+	std::cout << "Bureaucrat constructor called" << std::endl;
 }
 
 Bureaucrat::~Bureaucrat() {
 	
-	std::cout << "Bureaucrat " << this->_name << " went home" << std::endl;
+	std::cout << "Bureaucrat " << this->_name << " deconstructor called" << std::endl;
 }
 
 Bureaucrat::Bureaucrat( const std::string name, int grade ) : _name(name), _grade(grade) {
 	
+	std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " constructor called" << std::endl;
 	
 	if( grade < 1 ) {
 
-		std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
+		// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
 		throw Exception ("GradeTooLowException");
 	}
 		
 	if( grade > 150 ) {
 
-		std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
+		// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
 		throw Exception ("GradeTooHighException");
 	}
-
-	// _grade = grade;
-	
-	std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
 }
 
 
@@ -51,7 +48,7 @@ Bureaucrat::Bureaucrat( const std::string name, int grade ) : _name(name), _grad
 Bureaucrat::Bureaucrat( const Bureaucrat& other ) : _name( other._name ) {
 
 	this->_grade = other._grade;
-	// std::cout << "Copy constructor on Bureaucrat " << other << " called" << std::endl;
+	std::cout << "Copy constructor on Bureaucrat " << other << " called" << std::endl;
 }
 
 Bureaucrat& Bureaucrat::operator=( const Bureaucrat& other ) {
@@ -60,8 +57,8 @@ Bureaucrat& Bureaucrat::operator=( const Bureaucrat& other ) {
 		
 		this->_grade = other._grade;
 	}
-	
-	// std::cout << "Copy assignement operator on Bureaucrat " << other << " called" << std::endl;
+
+	std::cout << "Copy assignement operator on Bureaucrat " << other << " called" << std::endl;
 	return *this;
 }
 
@@ -72,14 +69,6 @@ const std::string Bureaucrat::getName() const{
 
 int Bureaucrat::getGrade() const {
 
-	// if( this->_grade < 1 || this->_grade > 150 ) {
-		
-	// 	if( this->_grade < 1 )
-	// 		std::cout << "Bureaucrat::GradeTooLowException " << this->_name << " bureaucrat grade " << this->_grade << std::endl;
-	// 	if( this->_grade > 150 )
-	// 		std::cout  << "Bureaucrat::GradeTooHighException " << this->_name << " bureaucrat grade " << this->_grade << std::endl;	
-	// }
-	
 	return this->_grade;
 }
 
@@ -91,12 +80,40 @@ void Bureaucrat::setGrade( const int grade ) {
 
 int Bureaucrat::incrementGrade() {
 
-	return _grade--;
+	_grade--;
+	
+	if( _grade < 1 ) {
+
+		// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
+		throw Exception ("GradeTooLowException");
+	}
+		
+	if( _grade > 150 ) {
+
+		// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
+		throw Exception ("GradeTooHighException");
+	}
+
+	return _grade;
 }
 
 int Bureaucrat::decrementGrade() {
 
-	return _grade++;
+	_grade++;
+
+	if( _grade < 1 ) {
+
+		// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
+		throw Exception ("GradeTooLowException");
+	}
+		
+	if( _grade > 150 ) {
+
+		// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
+		throw Exception ("GradeTooHighException");
+	}
+	
+	return _grade;
 }
 
 Bureaucrat::Exception::Exception( const std::string& msg ): _msg(msg) {

@@ -6,7 +6,7 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:01:45 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/10 18:30:42 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/11 13:29:16 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 #include <iostream>
 #include <string>
-// #include <exception>
 
 #define GR	"\033[38;5;118m"
 #define OR	"\033[38;5;208m"
@@ -25,8 +24,9 @@
 #define RD	"\033[38;5;196m"
 #define BL "\033[38;5;27m"
 #define GN "\033[38;5;34m"
+#define MAG "\033[38;5;161m"
 #define LY	"\033[93m"
-#define RES	"\033[0m"
+#define RS	"\033[0m"
 
 class Bureaucrat {
 
