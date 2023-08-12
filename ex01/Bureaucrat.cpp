@@ -6,7 +6,7 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:01:58 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/11 19:50:58 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/12 22:55:10 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,7 @@ Bureaucrat::Bureaucrat( const std::string name, int grade ) : _name(name), _grad
 	
 	std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " constructor called" << std::endl;
 	
-	if( grade < 1 ) {
-
-		// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
-		throw Exception ("GradeTooLowException");
-	}
-		
-	if( grade > 150 ) {
-
-		// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
-		throw Exception ("GradeTooHighException");
-	}
+	this->_checkGrade();
 }
 
 
@@ -63,6 +53,28 @@ Bureaucrat& Bureaucrat::operator=( const Bureaucrat& other ) {
 	return *this;
 }
 
+void Bureaucrat::_checkGrade() {
+
+	try {
+		
+		if( this->_grade < 1 ) {
+
+			// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
+			throw Exception ("GradeTooLowException");
+		}	
+			
+		if( this->_grade > 150 ) {
+
+			// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
+			throw Exception ("GradeTooHighException");
+		}
+		
+	} catch( Bureaucrat::Exception& e ) {
+
+		std::cout << "Bureaucrat::" << e.getMessage() << std::endl;
+	}
+}
+
 const std::string Bureaucrat::getName() const{
 
 	return this->_name;
@@ -80,19 +92,14 @@ void Bureaucrat::setGrade( const int grade ) {
 
 int Bureaucrat::incrementGrade() {
 
+	// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " constructor called" << std::endl;
+
+	
 	_grade--;
 	
-	if( _grade < 1 ) {
+	this->_checkGrade();
+	std::cout << "Bureaucrat " << this->_name << " increment grade to " << this->_grade << std::endl;
 
-		// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
-		throw Exception ("GradeTooLowException");
-	}
-		
-	if( _grade > 150 ) {
-
-		// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
-		throw Exception ("GradeTooHighException");
-	}
 
 	return _grade;
 }
@@ -101,33 +108,28 @@ int Bureaucrat::decrementGrade() {
 
 	_grade++;
 
-	if( _grade < 1 ) {
-
-		// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
-		throw Exception ("GradeTooLowException");
-	}
-		
-	if( _grade > 150 ) {
-
-		// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
-		throw Exception ("GradeTooHighException");
-	}
-	
+	this->_checkGrade();
+	std::cout << "Bureaucrat " << this->_name << " decrement grade to " << this->_grade << std::endl;
 	return _grade;
 }
 
-void Bureaucrat::signForm( Form f ) const {
+void Bureaucrat::signForm( Form& form ) {
+    
+	try {
+		
+		// bool signedSuccess = form.beSigned(*this);
+		
+		if ( form._checkFormSigned() == true ) {
+			
+    		std::cout << getName() << " signed " << form.getFormName() << std::endl;
+		} else {
 
-	if( f.getFormSigned() == 0 ) {
-		
-		std::cout << Bureaucrat::getName() << " signed " << f.getFormName() << std::endl;
-		
-	} else {
-		
-		std::cout << Bureaucrat::getName() << " couldn’t sign " << f.getFormName() \
-			<< " because he is too low in the hierarchy" << std::endl;
-		
-	}
+			throw Exception ("GradeTooLowException");
+		}
+        
+    } catch (const Bureaucrat::Exception& e) {
+        std::cout << getName() << " couldn’t sign " << form.getFormName() << " because " << e.getMessage() << std::endl;
+    }
 }
 
 Bureaucrat::Exception::Exception( const std::string& msg ): _msg(msg) {
@@ -147,3 +149,17 @@ std::ostream &operator<<( std::ostream &os, const Bureaucrat &instance ) {
 	
 	return os;
 }
+
+// void Bureaucrat::signForm( Form& f ) const {
+
+// 	if( f.getFormSigned() ) {
+		
+// 		std::cout << Bureaucrat::getName() << " signed " << f.getFormName() << std::endl;
+		
+// 	} else {
+		
+// 		std::cout << Bureaucrat::getName() << " couldn’t sign " << f.getFormName() \
+// 			<< " because he is too low in the hierarchy" << std::endl;
+		
+// 	}
+// }
