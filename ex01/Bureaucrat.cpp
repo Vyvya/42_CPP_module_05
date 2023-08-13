@@ -6,7 +6,7 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:01:58 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/12 22:55:10 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/13 18:23:51 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,6 @@ Bureaucrat::Bureaucrat( const std::string name, int grade ) : _name(name), _grad
 	this->_checkGrade();
 }
 
-
-//For a const member variable like _name, it must be initialized in the member 
-//initialization list since it cannot be assigned to after construction. 
-//Direct assignments inside the constructor body are not allowed for 
-//const members., the correct way to initialize _name in the copy constructor 
-//is through the member initialization list
 Bureaucrat::Bureaucrat( const Bureaucrat& other ) : _name( other._name ) {
 
 	this->_grade = other._grade;
@@ -53,26 +47,29 @@ Bureaucrat& Bureaucrat::operator=( const Bureaucrat& other ) {
 	return *this;
 }
 
-void Bureaucrat::_checkGrade() {
+bool Bureaucrat::_checkGrade() {
 
 	try {
 		
 		if( this->_grade < 1 ) {
 
-			// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
 			throw Exception ("GradeTooLowException");
+			return false;
 		}	
 			
 		if( this->_grade > 150 ) {
 
-			// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
 			throw Exception ("GradeTooHighException");
+			return false;
+
 		}
 		
 	} catch( Bureaucrat::Exception& e ) {
 
 		std::cout << "Bureaucrat::" << e.getMessage() << std::endl;
 	}
+	return true;
+
 }
 
 const std::string Bureaucrat::getName() const{
@@ -92,14 +89,10 @@ void Bureaucrat::setGrade( const int grade ) {
 
 int Bureaucrat::incrementGrade() {
 
-	// std::cout << "Bureaucrat " << this->_name << " grade " << this->_grade << " constructor called" << std::endl;
-
-	
 	_grade--;
 	
 	this->_checkGrade();
 	std::cout << "Bureaucrat " << this->_name << " increment grade to " << this->_grade << std::endl;
-
 
 	return _grade;
 }
@@ -110,24 +103,35 @@ int Bureaucrat::decrementGrade() {
 
 	this->_checkGrade();
 	std::cout << "Bureaucrat " << this->_name << " decrement grade to " << this->_grade << std::endl;
+	
 	return _grade;
 }
 
 void Bureaucrat::signForm( Form& form ) {
-    
+
 	try {
-		
-		// bool signedSuccess = form.beSigned(*this);
 		
 		if ( form._checkFormSigned() == true ) {
 			
-    		std::cout << getName() << " signed " << form.getFormName() << std::endl;
+    		std::cout << getName() << " signed " << form.getFormName() << std::endl; 
+			
 		} else {
+			
+			if( this->getGrade() < 1 || this->getGrade() > 150 )  {
 
-			throw Exception ("GradeTooLowException");
+				throw Exception ("1bureaucrat has wrong permissions");
+				
+			} else if( (form.getFormExecuteGrade() < 1 || form.getFormExecuteGrade() > 150) \
+				|| (form.getFormSignGrade() < 1 || form.getFormSignGrade() > 150) ) {
+
+				throw Exception ("form is falsely configured");
+			}
+			else
+				throw Exception ("bureaucrat has wrong permissions");
 		}
         
     } catch (const Bureaucrat::Exception& e) {
+		
         std::cout << getName() << " couldn’t sign " << form.getFormName() << " because " << e.getMessage() << std::endl;
     }
 }
@@ -150,16 +154,3 @@ std::ostream &operator<<( std::ostream &os, const Bureaucrat &instance ) {
 	return os;
 }
 
-// void Bureaucrat::signForm( Form& f ) const {
-
-// 	if( f.getFormSigned() ) {
-		
-// 		std::cout << Bureaucrat::getName() << " signed " << f.getFormName() << std::endl;
-		
-// 	} else {
-		
-// 		std::cout << Bureaucrat::getName() << " couldn’t sign " << f.getFormName() \
-// 			<< " because he is too low in the hierarchy" << std::endl;
-		
-// 	}
-// }

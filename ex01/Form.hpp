@@ -6,7 +6,7 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:47:12 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/12 22:51:17 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/13 18:12:07 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ class Form {
 		const int _executeGrade;
 		bool _formSigned;
 
-		void _checkGrade();
-
 	public:
 		
 		Form();
@@ -46,6 +44,7 @@ class Form {
 		
 		bool beSigned( Bureaucrat& b );
 		bool _checkFormSigned();
+		bool _checkGrade();
 		
 		class Exception {
 

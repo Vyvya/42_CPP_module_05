@@ -6,7 +6,7 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:47:21 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/12 22:51:51 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/13 18:13:09 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,6 @@ Form::Form( const std::string formName, int signGrade, int executeGrade ) \
 		<< " executeGrade " << this-> _executeGrade << " constructor called" << std::endl;
 	
 	_checkGrade();
-	// if( _signGrade < 1 || _executeGrade < 1 ) {
-
-	// 	// std::cout << "Form " << this->_formName << " signGrade " << this-> _signGrade \
-	// 	// << " executeGrade " << this-> _executeGrade << " constructor called" << std::endl;
-	// 	throw Exception ("GradeTooLowException");
-	// }
-		
-	// if( _signGrade > 150 || _executeGrade > 150 ) {
-
-	// 	// std::cout << "Form " << this->_formName << " signGrade " << this-> _signGrade \
-	// 	// << " executeGrade " << this-> _executeGrade << " constructor called" << std::endl;
-	// 	throw Exception ("GradeTooHighException");
-	// }
 }
 
 Form::Form( const Form& other ) : _formName(other._formName), _signGrade(other._signGrade), \
@@ -62,26 +49,27 @@ Form& Form::operator=( const Form& other ) {
 	return *this;
 }
 
-void Form::_checkGrade() {
+bool Form::_checkGrade() {
 
 	try {
 		
 		if( this->_signGrade < 1 || this->_executeGrade < 1) {
 
-			// std::cout << "Form " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
 			throw Exception ("GradeTooLowException");
+			return false;
 		}	
 			
 		if( this->_signGrade > 150 || this->_executeGrade > 150) {
 
-			// std::cout << "Form " << this->_name << " grade " << this->_grade << " came to office" << std::endl;
 			throw Exception ("GradeTooHighException");
+			return false;
 		}
 		
 	} catch( Form::Exception& e ) {
 
 		std::cout << "Form::" << e.getMessage() << std::endl;
 	}
+	return true;
 }
 
 bool Form::_checkFormSigned() {
@@ -90,7 +78,6 @@ bool Form::_checkFormSigned() {
 
 		return true;
 	}
-	
 	return false;
 }
 
@@ -116,24 +103,16 @@ int Form::getFormSigned() const {
 
 bool Form::beSigned( Bureaucrat& b ) {
 	
-	try {
+	if( (b.getGrade() <= this->getFormSignGrade()) && \
+		( this->getFormExecuteGrade() >= 1 && this->getFormExecuteGrade() <= 150 ) \
+			&& ( this->getFormSignGrade() >= 1 && this->getFormSignGrade() <= 150 ) ) {  
 
-		if( b.getGrade() <= this->getFormSignGrade() ) {
-
-			this->_formSigned = true;
-			return true;
-			// std::cout << "Form " << this->_formName << " grade " << this-> _signGrade << " came to office" << std::endl;
-		} else {
-
-			throw Exception ("GradeTooLowException");
-		}
-
-	}  catch( const Form::Exception& e ) {
-
-		std::cout << "Form::" << e.getMessage() << std::endl;
-		return false;
+		this->_formSigned = true;
+		
+		return true;
 	}
-
+	
+	return false;
 }
 
 Form::Exception::Exception( const std::string& msg ): _msg(msg) {

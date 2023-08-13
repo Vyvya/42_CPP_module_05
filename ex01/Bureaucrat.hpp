@@ -6,7 +6,7 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:01:45 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/12 21:56:31 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/13 15:17:16 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ class Bureaucrat {
 
 		const std::string _name;
 		int _grade;
-
-		void _checkGrade();
 		
 	public:
 		
@@ -57,6 +55,7 @@ class Bureaucrat {
 		int decrementGrade();
 
 		void signForm( Form& form );
+		bool _checkGrade();
 		
 		class Exception {
 
