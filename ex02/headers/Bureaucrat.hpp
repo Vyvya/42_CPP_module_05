@@ -6,7 +6,7 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:01:45 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/13 21:38:24 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/14 21:12:01 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 #include <iostream>
 #include <string>
 #include "AForm.hpp"
-// #include "ShrubberyCreationForm.hpp"
-// #include "RobotomyRequestForm.hpp"
-// #include "PresidentialPardonForm.hpp"
 
 #define GR	"\033[38;5;118m"
 #define OR	"\033[38;5;208m"
@@ -60,7 +57,7 @@ class Bureaucrat {
 		void signAForm( AForm& aform );
 		bool _checkGrade();
 
-		void executeForm(AForm const & aform);
+		void executeForm(AForm const & aform) const;
 		
 		class Exception {
 

@@ -10,11 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "AForm.hpp"
-#include "Bureaucrat.hpp"
-// #include "ShrubberyCreationForm.hpp"
-// #include "RobotomyRequestForm.hpp"
-// #include "PresidentialPardonForm.hpp"
+#include "headers/AForm.hpp"
+#include "headers/Bureaucrat.hpp"
 
 AForm::AForm() : _aformName("Unnamed"), _signGrade(1), _executeGrade(1), _aformSigned(0) {
 	
@@ -75,7 +72,7 @@ bool AForm::_checkGrade() {
 	return true;
 }
 
-bool AForm::_checkAFormSigned() {
+bool AForm::_checkAFormSigned() const {
 
 	if ( this->_aformSigned == true ) {
 

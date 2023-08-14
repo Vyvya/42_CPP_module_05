@@ -6,7 +6,7 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 18:26:50 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/13 21:50:28 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/14 21:01:26 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@
 #include <string>
 #include <fstream> 
 
-// class AForm;
 class Bureaucrat;
 
 class ShrubberyCreationForm : public AForm {
 
 	private:
 
-		void _formTree(void);
+		void _formTree(void) const;
 		
 	public:
 		
@@ -35,7 +34,7 @@ class ShrubberyCreationForm : public AForm {
 		ShrubberyCreationForm( std::string target );
 		~ShrubberyCreationForm();
 		
-		bool execute(Bureaucrat const & executor);
+		bool execute(Bureaucrat const & executor) const;
 		
 		class ExceptionFile {
 

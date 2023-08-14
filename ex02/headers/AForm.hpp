@@ -14,9 +14,7 @@
 # define AFORM_HPP
 
 #include "Bureaucrat.hpp"
-// #include "ShrubberyCreationForm.hpp"
-// #include "RobotomyRequestForm.hpp"
-// #include "PresidentialPardonForm.hpp"
+
 #include <iostream>
 #include <string>
 
@@ -40,7 +38,7 @@ class AForm {
 
 		AForm& operator=( const AForm& other );
 		
-		virtual bool execute(Bureaucrat const & executor) = 0;
+		virtual bool execute(Bureaucrat const & executor) const = 0;
 		
 		std::string getAFormName() const;
 		int getAFormSignGrade() const;
@@ -48,7 +46,7 @@ class AForm {
 		int getAFormSigned() const;
 		
 		bool beSigned( Bureaucrat& b );
-		bool _checkAFormSigned();
+		bool _checkAFormSigned() const;
 		bool _checkGrade();
 		
 		class Exception {

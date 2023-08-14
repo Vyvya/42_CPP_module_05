@@ -6,22 +6,17 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 18:27:00 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/13 21:56:28 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/14 21:16:11 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "AForm.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "Bureaucrat.hpp"
-
-// ShrubberyCreationForm::ShrubberyCreationForm() {
-	
-// 	std::cout << "ShrubberyCreationForm constructor called" << std::endl;
-// }
+#include "headers/ShrubberyCreationForm.hpp"
+#include "headers/Bureaucrat.hpp"
 
 ShrubberyCreationForm::ShrubberyCreationForm( std::string target ) : AForm(target, 145, 137) {
 	
-	std::cout << "ShrubberyCreationForm constructor signGrade" << this->getAFormSignGrade() \
+	std::cout << "ShrubberyCreationForm constructor signGrade " << this->getAFormSignGrade() \
 	<< " executeGrade " << this->getAFormExecuteGrade() << " called" << std::endl;
 }
 
@@ -31,35 +26,38 @@ ShrubberyCreationForm::~ShrubberyCreationForm() {
 	<< " executeGrade " << this->getAFormExecuteGrade() << " called" << std::endl;
 }
 
-bool ShrubberyCreationForm::execute(Bureaucrat const & executor) {
-	
-	std::cout << executor.getGrade() << std::endl;
-	std::cout << this->getAFormSignGrade() << std::endl;
-	std::cout << this->_checkAFormSigned() << std::endl;
-
-
+bool ShrubberyCreationForm::execute(Bureaucrat const & executor) const {
 	
 	try {
 
-		if( (executor.getGrade() <= this->getAFormExecuteGrade())) { // && this->_checkAFormSigned() == true 
+		if( (executor.getGrade() <= this->getAFormExecuteGrade()) && this->_checkAFormSigned() == true ) { // 
 
 			this->_formTree();
 			return true;
 			
 		} else {
 			
-			throw ExceptionFile ("File corrupted");
+			if( executor.getGrade() > this->getAFormExecuteGrade() ) {
+				
+				throw AForm::Exception("executor has wrong permissions");
+			} else if( this->_checkAFormSigned() == false ) {
+				
+				throw AForm::Exception("form wasn't signed");
+			} else {
+				
+				throw AForm::Exception("executor and form are not coordinated");
+			}
 		}
 		
-	} catch (const ExceptionFile& e) {
+	} catch ( const AForm::Exception& e ) {
 
-		std::cout << "ShrubberyCreationForm::" << e.getMessage() << std::endl;
+		std::cout << "RobotomyRequestForm::" << e.getMessage() << std::endl;
 	}
-	
+
 	return false;
 }
 
-void ShrubberyCreationForm::_formTree(void) {
+void ShrubberyCreationForm::_formTree(void) const {
 
 	std::string filename = getAFormName() + "_shrubbery";
 	std::ofstream outputFile(filename);
@@ -96,7 +94,7 @@ ShrubberyCreationForm::ExceptionFile::ExceptionFile( const std::string& msg ) : 
 ShrubberyCreationForm::ExceptionFile::~ExceptionFile() {
 }
 
-	std::string ShrubberyCreationForm::ExceptionFile::getMessage() const {
+std::string ShrubberyCreationForm::ExceptionFile::getMessage() const {
 	
 	return this->_msg;
 }

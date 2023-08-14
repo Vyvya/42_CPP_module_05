@@ -6,15 +6,15 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:01:58 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/13 21:10:42 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/14 21:12:42 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Bureaucrat.hpp"
-#include "AForm.hpp"
-#include "ShrubberyCreationForm.hpp"
-// #include "RobotomyRequestForm.hpp"
-// #include "PresidentialPardonForm.hpp"
+#include "headers/Bureaucrat.hpp"
+#include "headers/AForm.hpp"
+#include "headers/ShrubberyCreationForm.hpp"
+#include "headers/RobotomyRequestForm.hpp"
+#include "headers/PresidentialPardonForm.hpp"
 
 Bureaucrat::Bureaucrat() {
 	
@@ -139,13 +139,21 @@ void Bureaucrat::signAForm( AForm& aform ) {
     }
 }
 
-// void Bureaucrat::executeForm(AForm const & aform) {
+void Bureaucrat::executeForm(AForm const & aform) const {
 
-// 	try {
+	try {
+		
+		if( aform.execute(*this) == true )
+    		std::cout << getName() << " executed " << aform.getAFormName() << std::endl;
 
-// 		if( aform.getAFormExecuteGrade() >= 1 && aform.getAFormExecuteGrade() <= 150 )
-// 	}
-// }
+		else
+			throw Exception ("bureaucrat has wrong permissions");
+	} catch (const Bureaucrat::Exception& e) {
+		
+        std::cout << getName() << " couldn’t execute " << aform.getAFormName() << " because " << e.getMessage() << std::endl;
+	}
+	
+}
 
 Bureaucrat::Exception::Exception( const std::string& msg ): _msg(msg) {
 }
