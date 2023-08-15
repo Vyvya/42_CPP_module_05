@@ -6,7 +6,7 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:01:58 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/11 13:18:35 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/15 17:08:20 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ Bureaucrat::Bureaucrat( const std::string name, int grade ) : _name(name), _grad
 Bureaucrat::Bureaucrat( const Bureaucrat& other ) : _name( other._name ) {
 
 	this->_grade = other._grade;
-	std::cout << "Copy constructor on Bureaucrat " << other << " called" << std::endl;
+	// std::cout << "Copy constructor on Bureaucrat " << other << " called" << std::endl;
 }
 
 Bureaucrat& Bureaucrat::operator=( const Bureaucrat& other ) {
@@ -58,7 +58,7 @@ Bureaucrat& Bureaucrat::operator=( const Bureaucrat& other ) {
 		this->_grade = other._grade;
 	}
 
-	std::cout << "Copy assignement operator on Bureaucrat " << other << " called" << std::endl;
+	// std::cout << "Copy assignement operator on Bureaucrat " << other << " called" << std::endl;
 	return *this;
 }
 

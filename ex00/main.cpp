@@ -6,7 +6,7 @@
 /*   By: vgejno <vgejno@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:01:18 by vgejno            #+#    #+#             */
-/*   Updated: 2023/08/11 13:29:43 by vgejno           ###   ########.fr       */
+/*   Updated: 2023/08/12 18:57:02 by vgejno           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,16 @@ void tryGradeToLow() {
 		
 		Bureaucrat B0("Nul", 0);
 		std::cout << B0 << std::endl;
+		
+	} catch( Bureaucrat::Exception& e ) {
+				
+		std::cout << "Bureaucrat::" << e.getMessage() << std::endl;
+	}
+	
+	try {
+		
+		Bureaucrat Bmin("Minus", -8);
+		std::cout << Bmin << std::endl;
 		
 	} catch( Bureaucrat::Exception& e ) {
 				
